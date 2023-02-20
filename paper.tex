@@ -1,0 +1,101 @@
+\documentclass[twoside]{article}
+\usepackage{seminarpaper}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\usepackage{csquotes}
+
+\addbibresource{references.bib}
+
+\begin{document}
+
+% If your paper is accepted and the title of your paper is very long,
+% the style will print as headings an error message. Use the following
+% command to supply a shorter title of your paper so that it can be
+% used as headings.
+%
+%\runningtitle{I use this title instead because the last one was very long}
+
+% If your paper is accepted and the number of authors is large, the
+% style will print as headings an error message. Use the following
+% command to supply a shorter version of the authors names so that
+% they can be used as headings (for example, use only the surnames)
+%
+%\runningauthor{Surname 1, Surname 2, Surname 3, ...., Surname n}
+
+\twocolumn[
+
+\papertitle{Transformers in Language Models}
+
+\paperauthor{Mikael Fredriksson}
+
+\paperaddress{ } ]
+
+\begin{abstract}
+  The Abstract paragraph should be indented 0.25 inch (1.5 picas) on
+  both left and right-hand margins. Use 10~point type, with a vertical
+  spacing of 11~points.  The {\bf Abstract} heading must be centered,
+  bold, and in point size 12. Two line spaces precede the
+  Abstract. The Abstract must be limited to one paragraph.
+\end{abstract}
+
+\section{Introduction}
+This paper will take a look at three popular language models utilizing
+transformers in their architecture. It will also give a quick overview
+of some applications and additions to the generic model.
+
+\section{Models}
+
+The models this paper discusses very closely follow the initial architecture
+presented in the paper originally proposing the transformer 
+\cite{vaswani_attention_2017}. Most of the differences between 
+the models come down to training.
+
+\subsection{Generative Pre-Trained Transformer}
+Generative Pre-Trained Transformer, henceforth referred to as GPT, is a model
+which is focused mostly on text generation \cite{brown_language_2020}. 
+GPT uses only the decoder of the transformer with 12 layers 
+\cite{radford_improving_nodate}. The training is split into unsupervised
+pre-training and supervised fine-tuning. 
+
+In the unsupervised pre-training phase, the model is given a set of long form text
+\cite{radford_improving_nodate}. The supervised fine-tuning is used to train the
+model for a specific task. 
+
+As the number of parameters in the model grows past a certain threshold, it
+is no longer necessary to fine-tune the model for each specific use case 
+\cite{brown_language_2020}. Depending on the task at hand, it might be sufficient
+to just give the model some examples of the task initially and it will (understand what you want it to do). The examples are given to
+the model after training during inference and thus differs from fine-tuning. 
+This is called few-shot learning. Special cases of this are one-shot learning which is
+otherwise similar to few-shot learning except the number of examples is one.
+Zero-shot learning refers to giving the task description using natural language,
+kind of like you were explaining it to a human. 
+
+As an example \cite{brown_language_2020} used English to French translation.
+The researchers gave the model between 10 to 100 pairs of examples of the
+same sentence in English and French. The last pair had just an English sentence
+and the model was expected to produce the corresponding sentence translated into
+French.
+
+While few-shot learning requires less data and computing power, which makes it more
+accessible compared to fine-tuning a large model, at least during the writing of 
+\cite{brown_language_2020} failed to produce comparable results to fine-tuning.
+The number of examples given is restricted by the size of the model's context,
+which for GPT-3 was 2048 tokens, around 1500 words (citation needed, pricing page has this info).
+
+\subsection{Bidirectional Encoder Representations from Transformers}
+
+\subsection{Text-to-Text Transfer Transformer}
+
+
+\section{Applications}
+
+\subsection{Toolformer}
+Transformers can be taught to use different tools \cite{schick_toolformer_2023}. 
+This can be achieved using additional fine tuning, as is the case with Toolformer
+\cite{schick_toolformer_2023}, or by using few-shot methods telling the model 
+about the tools available to it, as in Toolformer Zero \cite{markus_toolformer_2023}.
+
+
+\printbibliography
+
+\end{document}
