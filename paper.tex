@@ -2,6 +2,10 @@
 \usepackage{seminarpaper}
 \usepackage[backend=bibtex,style=numeric]{biblatex}
 \usepackage{csquotes}
+\usepackage{tikz}
+
+\usetikzlibrary{positioning}
+\usetikzlibrary{matrix}
 
 \addbibresource{references.bib}
 
@@ -41,6 +45,13 @@
 This paper will take a look at three popular language models utilizing
 transformers in their architecture. It will also give a quick overview
 of some applications and additions to the generic model.
+
+TODO: explain why I chose these specific models to look at maybe?
+
+\section{Training}
+TODO: write about transfer learning in general, take from bert.
+means big pretraining and then using that strong understanding
+to fine tune for specific tasks
 
 \section{Models}
 
@@ -113,7 +124,33 @@ train the model for specific natural language tasks leveraging the existing lang
 from the pre-training stage. Fine-tuning is usually a more lightweight operation than pre-training.
 
 \subsection{Text-to-Text Transfer Transformer}
+\begin{tikzpicture}[line width=0.3mm, align=center, font=\sffamily]
+  % Nodes
+  \matrix [matrix of nodes, row sep=2mm] (rightmat) {
+    \node (translatein) [rounded corners=3pt, draw, fill=green!20] {"translate English to German: That is good."}; \\
+    \node (colain)[rounded corners=3pt, draw, fill=red!20] {"cola sentence: The\\course is jumping well."}; \\
+    \node (stsbin)[rounded corners=3pt, draw, fill=yellow!20] {"stsb sentence1: The rhino grazed\\on the grass. sentence2: A rhino\\is grazing in a field."}; \\
+    \node (summaryin)[rounded corners=3pt, draw, fill=cyan!20] {"summarize: state authorities\\dispatched emergency crews tuesday to\\survey the damage after an onslaught\\of severe weather in mississippi..."}; \\
+  };
+  \node [right=of rightmat, rounded corners=3pt, draw, fill=gray!20] (t5) {\Huge T5};
+  \matrix [matrix of nodes, right=of t5, row sep=2mm] {
+    \node (translateout)[rounded corners=3pt, draw, fill=green!20] {"Das ist gut."}; \\
+    \node (colaout)[rounded corners=3pt, draw, fill=red!20] {"not acceptable"}; \\
+    \node (stsbout)[rounded corners=3pt, draw, fill=yellow!20]  {"3.8"}; \\
+    \node (summaryout)[rounded corners=3pt, draw, fill=cyan!20] {"six people hospitalized after\\a storm in attala county."}; \\
+  };
 
+  % Lines
+  \draw [-] (translatein.east) .. controls +(right:5mm) and +(left:5mm) .. (t5.west);
+  \draw [-] (colain.east) .. controls +(right:5mm) and +(left:5mm) .. (t5.west);
+  \draw [-] (stsbin.east) .. controls +(right:5mm) and +(left:5mm) .. (t5.west);
+  \draw [-] (summaryin.east) .. controls +(right:5mm) and +(left:5mm) .. (t5.west);
+
+  \draw [-] (translateout.west) .. controls +(left:5mm) and +(right:5mm) .. (t5.east);
+  \draw [-] (colaout.west) .. controls +(left:5mm) and +(right:5mm) .. (t5.east);
+  \draw [-] (stsbout.west) .. controls +(left:5mm) and +(right:5mm) .. (t5.east);
+  \draw [-] (summaryout.west) .. controls +(left:5mm) and +(right:5mm) .. (t5.east);
+\end{tikzpicture}
 
 \section{Applications}
 
