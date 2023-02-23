@@ -50,7 +50,7 @@ presented in the paper originally proposing the transformer
 the models come down to training.
 
 \subsection{Generative Pre-Trained Transformer}
-Generative Pre-Trained Transformer, henceforth referred to as GPT, is a model
+Generative Pre-Trained Transformer, more commonly known as GPT, is a model
 which is focused mostly on text generation \cite{brown_language_2020}. 
 GPT uses only the decoder of the transformer with 12 layers 
 \cite{radford_improving_nodate}. The training is split into unsupervised
@@ -83,6 +83,34 @@ The number of examples given is restricted by the size of the model's context,
 which for GPT-3 was 2048 tokens, around 1500 words (citation needed, pricing page has this info).
 
 \subsection{Bidirectional Encoder Representations from Transformers}
+Bidirectional Encoder Representations from Transformers, henceforth referred to as BERT,
+is a language model utilizing masking of words during training to achieve bidirectionality
+in the model. \cite{devlin_bert_2019}
+
+BERT uses a similar architecture as the original transformer. It uses the encoder with
+multiple layers. The main difference is in the training methods. In the pre-training step,
+two different training approaches are used: masked language model and next sentence prediction.
+Masking allows the self-attention layer to take into account both sides of a given word, instead
+of just one side, as in GPT which can only use the previous words as context. Using next sentence
+prediction improves the model's understanding of the relationships between sentences. This is
+useful for question answering and natural language inference type of tasks. \cite{devlin_bert_2019}
+
+A masked language model (MLM) is achived by hiding a certain number of tokens, 12\% in the paper, and
+asking the model to predict the hidden token. The model can then use both sides of the token as
+context. Some of the tokens marked for masking are instead turned 
+into random tokens or kept as is. This helps prevent a difference between pre-training and fine-tuning.
+Other unidirectional methods predict the entire text during training while MLM only 
+does so only for the masked tokens. \cite{devlin_bert_2019}
+
+Next sentence prediction takes a pair of sentences, \texttt{A} and \texttt{B}, and requests the model
+to predict whether \texttt{B} follows \texttt{A} or not. In the paper, 50\% of the time \texttt{B} 
+was the next sentence and 50\% of the time it was not. \cite{devlin_bert_2019}
+
+BERT also uses unsupervised pre-training and supervised fine-tuning as the general training setup \cite{devlin_bert_2019}.
+The largest amount of work and time is spent pre-training the model on a large set of unstructured
+text. This teaches the model general language understanding. Fine-tuning can then be used to 
+train the model for specific natural language tasks leveraging the existing language knowledge 
+from the pre-training stage. Fine-tuning is usually a more lightweight operation than pre-training.
 
 \subsection{Text-to-Text Transfer Transformer}
 
