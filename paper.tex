@@ -84,18 +84,25 @@ large.
 
 \section{Models}
 
-The models this paper discusses very closely follow the initial architecture
+The models this paper discusses closely follow the initial architecture
 presented in the paper originally proposing the transformer 
 \cite{vaswani_attention_2017}. Most of the differences between 
-the models come down to training.
+the models come down to training, attention layer masking and the encoder-decoder layers
+\cite{raffel_exploring_2020}.
 
 TODO: talk about masking the attention layers somewhere, was talked about in
 the t5 paper
+TODO: talk about masking, t5 paper lists this as the biggest differentiating factor
+between models. the t5 paper is also good source for general comparison between different
+architectures and approaches
+(the above two are the same)
 
 TODO: talk about the exact differences between fine-tuning,
 i think bert modifies the weights and gpt only adds an extra layer after
 
 TODO: elmo for feature based?
+
+
 
 \subsection{Generative Pre-Trained Transformer}
 Generative Pre-Trained Transformer, more commonly known as GPT, is a model
