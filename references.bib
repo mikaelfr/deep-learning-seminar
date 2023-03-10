@@ -28,7 +28,7 @@
 	file = {arXiv Fulltext PDF:/Users/mikael/Zotero/storage/82PEDYUF/Schick et al. - 2023 - Toolformer Language Models Can Teach Themselves t.pdf:application/pdf;arXiv.org Snapshot:/Users/mikael/Zotero/storage/2XNPTMAX/2302.html:text/html},
 }
 
-@misc{markus_toolformer_2023,
+@misc{minosvasilias_markus_toolformer_2023,
 	title = {Toolformer {Zero}},
 	url = {https://github.com/minosvasilias/toolformer-zero},
 	abstract = {React app implementing OpenAI and Google APIs to re-create behavior of the toolformer paper.},
@@ -37,14 +37,6 @@
 	month = feb,
 	year = {2023},
 	note = {original-date: 2023-02-18T20:46:05Z},
-}
-
-@article{radford_improving_nodate,
-	title = {Improving {Language} {Understanding} by {Generative} {Pre}-{Training}},
-	abstract = {Natural language understanding comprises a wide range of diverse tasks such as textual entailment, question answering, semantic similarity assessment, and document classiﬁcation. Although large unlabeled text corpora are abundant, labeled data for learning these speciﬁc tasks is scarce, making it challenging for discriminatively trained models to perform adequately. We demonstrate that large gains on these tasks can be realized by generative pre-training of a language model on a diverse corpus of unlabeled text, followed by discriminative ﬁne-tuning on each speciﬁc task. In contrast to previous approaches, we make use of task-aware input transformations during ﬁne-tuning to achieve effective transfer while requiring minimal changes to the model architecture. We demonstrate the effectiveness of our approach on a wide range of benchmarks for natural language understanding. Our general task-agnostic model outperforms discriminatively trained models that use architectures speciﬁcally crafted for each task, signiﬁcantly improving upon the state of the art in 9 out of the 12 tasks studied. For instance, we achieve absolute improvements of 8.9\% on commonsense reasoning (Stories Cloze Test), 5.7\% on question answering (RACE), and 1.5\% on textual entailment (MultiNLI).},
-	language = {en},
-	author = {Radford, Alec and Narasimhan, Karthik and Salimans, Tim and Sutskever, Ilya},
-	file = {Radford et al. - Improving Language Understanding by Generative Pre.pdf:/Users/mikael/Zotero/storage/FWYAMVVS/Radford et al. - Improving Language Understanding by Generative Pre.pdf:application/pdf},
 }
 
 @inproceedings{brown_language_2020,
@@ -67,6 +59,14 @@
 	language = {en},
 	author = {Radford, Alec and Wu, Jeffrey and Child, Rewon and Luan, David and Amodei, Dario and Sutskever, Ilya},
 	file = {Radford et al. - Language Models are Unsupervised Multitask Learner.pdf:/Users/mikael/Zotero/storage/ZYJCTXZB/Radford et al. - Language Models are Unsupervised Multitask Learner.pdf:application/pdf},
+}
+
+@article{radford_improving_nodate,
+	title = {Improving {Language} {Understanding} by {Generative} {Pre}-{Training}},
+	abstract = {Natural language understanding comprises a wide range of diverse tasks such as textual entailment, question answering, semantic similarity assessment, and document classiﬁcation. Although large unlabeled text corpora are abundant, labeled data for learning these speciﬁc tasks is scarce, making it challenging for discriminatively trained models to perform adequately. We demonstrate that large gains on these tasks can be realized by generative pre-training of a language model on a diverse corpus of unlabeled text, followed by discriminative ﬁne-tuning on each speciﬁc task. In contrast to previous approaches, we make use of task-aware input transformations during ﬁne-tuning to achieve effective transfer while requiring minimal changes to the model architecture. We demonstrate the effectiveness of our approach on a wide range of benchmarks for natural language understanding. Our general task-agnostic model outperforms discriminatively trained models that use architectures speciﬁcally crafted for each task, signiﬁcantly improving upon the state of the art in 9 out of the 12 tasks studied. For instance, we achieve absolute improvements of 8.9\% on commonsense reasoning (Stories Cloze Test), 5.7\% on question answering (RACE), and 1.5\% on textual entailment (MultiNLI).},
+	language = {en},
+	author = {Radford, Alec and Narasimhan, Karthik and Salimans, Tim and Sutskever, Ilya},
+	file = {Radford et al. - Improving Language Understanding by Generative Pre.pdf:/Users/mikael/Zotero/storage/FWYAMVVS/Radford et al. - Improving Language Understanding by Generative Pre.pdf:application/pdf},
 }
 
 @misc{devlin_bert_2019,
@@ -98,4 +98,51 @@
 	note = {arXiv:1910.10683 [cs, stat]},
 	keywords = {Computer Science - Computation and Language, Computer Science - Machine Learning, Statistics - Machine Learning},
 	file = {arXiv Fulltext PDF:/Users/mikael/Zotero/storage/29AN6LHE/Raffel et al. - 2020 - Exploring the Limits of Transfer Learning with a U.pdf:application/pdf;arXiv.org Snapshot:/Users/mikael/Zotero/storage/KFDE4UP5/1910.html:text/html},
+}
+
+@misc{child_generating_2019,
+	title = {Generating {Long} {Sequences} with {Sparse} {Transformers}},
+	url = {http://arxiv.org/abs/1904.10509},
+	doi = {10.48550/arXiv.1904.10509},
+	abstract = {Transformers are powerful sequence models, but require time and memory that grows quadratically with the sequence length. In this paper we introduce sparse factorizations of the attention matrix which reduce this to \$O(n {\textbackslash}sqrt\{n\})\$. We also introduce a) a variation on architecture and initialization to train deeper networks, b) the recomputation of attention matrices to save memory, and c) fast attention kernels for training. We call networks with these changes Sparse Transformers, and show they can model sequences tens of thousands of timesteps long using hundreds of layers. We use the same architecture to model images, audio, and text from raw bytes, setting a new state of the art for density modeling of Enwik8, CIFAR-10, and ImageNet-64. We generate unconditional samples that demonstrate global coherence and great diversity, and show it is possible in principle to use self-attention to model sequences of length one million or more.},
+	urldate = {2023-02-19},
+	publisher = {arXiv},
+	author = {Child, Rewon and Gray, Scott and Radford, Alec and Sutskever, Ilya},
+	month = apr,
+	year = {2019},
+	note = {arXiv:1904.10509 [cs, stat]},
+	keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+	file = {arXiv Fulltext PDF:/Users/mikael/Zotero/storage/PMWA6GVK/Child et al. - 2019 - Generating Long Sequences with Sparse Transformers.pdf:application/pdf;arXiv.org Snapshot:/Users/mikael/Zotero/storage/PBJGI4EP/1904.html:text/html},
+}
+
+@misc{driess_palm-e_2023,
+	title = {{PaLM}-{E}: {An} {Embodied} {Multimodal} {Language} {Model}},
+	shorttitle = {{PaLM}-{E}},
+	url = {http://arxiv.org/abs/2303.03378},
+	doi = {10.48550/arXiv.2303.03378},
+	abstract = {Large language models excel at a wide range of complex tasks. However, enabling general inference in the real world, e.g., for robotics problems, raises the challenge of grounding. We propose embodied language models to directly incorporate real-world continuous sensor modalities into language models and thereby establish the link between words and percepts. Input to our embodied language model are multi-modal sentences that interleave visual, continuous state estimation, and textual input encodings. We train these encodings end-to-end, in conjunction with a pre-trained large language model, for multiple embodied tasks including sequential robotic manipulation planning, visual question answering, and captioning. Our evaluations show that PaLM-E, a single large embodied multimodal model, can address a variety of embodied reasoning tasks, from a variety of observation modalities, on multiple embodiments, and further, exhibits positive transfer: the model benefits from diverse joint training across internet-scale language, vision, and visual-language domains. Our largest model, PaLM-E-562B with 562B parameters, in addition to being trained on robotics tasks, is a visual-language generalist with state-of-the-art performance on OK-VQA, and retains generalist language capabilities with increasing scale.},
+	urldate = {2023-03-10},
+	publisher = {arXiv},
+	author = {Driess, Danny and Xia, Fei and Sajjadi, Mehdi S. M. and Lynch, Corey and Chowdhery, Aakanksha and Ichter, Brian and Wahid, Ayzaan and Tompson, Jonathan and Vuong, Quan and Yu, Tianhe and Huang, Wenlong and Chebotar, Yevgen and Sermanet, Pierre and Duckworth, Daniel and Levine, Sergey and Vanhoucke, Vincent and Hausman, Karol and Toussaint, Marc and Greff, Klaus and Zeng, Andy and Mordatch, Igor and Florence, Pete},
+	month = mar,
+	year = {2023},
+	note = {arXiv:2303.03378 [cs]},
+	keywords = {Computer Science - Machine Learning, Computer Science - Artificial Intelligence, Computer Science - Robotics},
+	file = {arXiv Fulltext PDF:/Users/mikael/Zotero/storage/IXDPNHFK/Driess et al. - 2023 - PaLM-E An Embodied Multimodal Language Model.pdf:application/pdf;arXiv.org Snapshot:/Users/mikael/Zotero/storage/3XVB54QK/2303.html:text/html},
+}
+
+@misc{chowdhery_palm_2022,
+	title = {{PaLM}: {Scaling} {Language} {Modeling} with {Pathways}},
+	shorttitle = {{PaLM}},
+	url = {http://arxiv.org/abs/2204.02311},
+	doi = {10.48550/arXiv.2204.02311},
+	abstract = {Large language models have been shown to achieve remarkable performance across a variety of natural language tasks using few-shot learning, which drastically reduces the number of task-specific training examples needed to adapt the model to a particular application. To further our understanding of the impact of scale on few-shot learning, we trained a 540-billion parameter, densely activated, Transformer language model, which we call Pathways Language Model PaLM. We trained PaLM on 6144 TPU v4 chips using Pathways, a new ML system which enables highly efficient training across multiple TPU Pods. We demonstrate continued benefits of scaling by achieving state-of-the-art few-shot learning results on hundreds of language understanding and generation benchmarks. On a number of these tasks, PaLM 540B achieves breakthrough performance, outperforming the finetuned state-of-the-art on a suite of multi-step reasoning tasks, and outperforming average human performance on the recently released BIG-bench benchmark. A significant number of BIG-bench tasks showed discontinuous improvements from model scale, meaning that performance steeply increased as we scaled to our largest model. PaLM also has strong capabilities in multilingual tasks and source code generation, which we demonstrate on a wide array of benchmarks. We additionally provide a comprehensive analysis on bias and toxicity, and study the extent of training data memorization with respect to model scale. Finally, we discuss the ethical considerations related to large language models and discuss potential mitigation strategies.},
+	urldate = {2023-03-10},
+	publisher = {arXiv},
+	author = {Chowdhery, Aakanksha and Narang, Sharan and Devlin, Jacob and Bosma, Maarten and Mishra, Gaurav and Roberts, Adam and Barham, Paul and Chung, Hyung Won and Sutton, Charles and Gehrmann, Sebastian and Schuh, Parker and Shi, Kensen and Tsvyashchenko, Sasha and Maynez, Joshua and Rao, Abhishek and Barnes, Parker and Tay, Yi and Shazeer, Noam and Prabhakaran, Vinodkumar and Reif, Emily and Du, Nan and Hutchinson, Ben and Pope, Reiner and Bradbury, James and Austin, Jacob and Isard, Michael and Gur-Ari, Guy and Yin, Pengcheng and Duke, Toju and Levskaya, Anselm and Ghemawat, Sanjay and Dev, Sunipa and Michalewski, Henryk and Garcia, Xavier and Misra, Vedant and Robinson, Kevin and Fedus, Liam and Zhou, Denny and Ippolito, Daphne and Luan, David and Lim, Hyeontaek and Zoph, Barret and Spiridonov, Alexander and Sepassi, Ryan and Dohan, David and Agrawal, Shivani and Omernick, Mark and Dai, Andrew M. and Pillai, Thanumalayan Sankaranarayana and Pellat, Marie and Lewkowycz, Aitor and Moreira, Erica and Child, Rewon and Polozov, Oleksandr and Lee, Katherine and Zhou, Zongwei and Wang, Xuezhi and Saeta, Brennan and Diaz, Mark and Firat, Orhan and Catasta, Michele and Wei, Jason and Meier-Hellstern, Kathy and Eck, Douglas and Dean, Jeff and Petrov, Slav and Fiedel, Noah},
+	month = oct,
+	year = {2022},
+	note = {arXiv:2204.02311 [cs]},
+	keywords = {Computer Science - Computation and Language},
+	file = {arXiv Fulltext PDF:/Users/mikael/Zotero/storage/EQ8AX4LG/Chowdhery et al. - 2022 - PaLM Scaling Language Modeling with Pathways.pdf:application/pdf;arXiv.org Snapshot:/Users/mikael/Zotero/storage/CBCDJ4BP/2204.html:text/html},
 }
