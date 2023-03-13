@@ -1,8 +1,10 @@
 \documentclass[twoside]{article}
+\usepackage[english]{babel}
 \usepackage{seminarpaper}
 \usepackage[backend=bibtex,style=numeric]{biblatex}
 \usepackage{csquotes}
 \usepackage{tikz}
+
 
 \usetikzlibrary{positioning}
 \usetikzlibrary{matrix}
@@ -75,6 +77,55 @@ The training can fine-tune all the parameters of the model, as in BERT
 \cite{devlin_bert_2019}, or an additional layer can be added and then
 trained, as in GPT \cite{radford_improving_nodate}.
 
+\subsection{Attention masking}
+
+TODO: explain how attention masking works
+
+TODO: explain sparse transformer, used in gpt-3 (maybe 2 also)
+
+The original transformer's encoder-decoder architecture as specified in 
+\cite{vaswani_attention_2017} corresponds to the leftmost masking pattern as
+specified in \ref{masking_patterns}. T5 uses this architecture and masking pattern
+\cite{raffel_exploring_2020}. As previously mentioned, BERT uses an encoder
+only architecture \cite{devlin_bert_2019} and uses a fully-visible masking 
+pattern with a special classification token \cite{raffel_exploring_2020}. GPT on
+the other hand, uses a decoder only architecture \cite{radford_improving_nodate}
+and uses causal masking \cite{liu_generating_2018}.
+
+Prefix masking can be useful for example when translating. The prefix allows the
+model to attend to the entire source language sentence and causal masking can be 
+used only for the target language sentence prediction. \cite{raffel_exploring_2020}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics*[scale=0.15]{img/attention_masking.png}
+  \caption{
+    Different attention masking patterns seen in transformer based language models.
+    Dark squares indicate that the attention mechanism can see the input $i$ at time $j$.
+    Light squares indicate that the access is blocked for a given pair $i$, $j$. 
+    \cite{raffel_exploring_2020}
+  }
+\end{figure}
+\begin{figure}[h]
+  \centering
+  \includegraphics*[scale=0.15]{img/lm_masking.png}
+  \caption{
+    Different masking patterns used within language models. Dark lines correspond to 
+    fully-visible masking. Light gray lines indicate causal masking.
+    \cite{raffel_exploring_2020}
+  }
+\end{figure}
+\label{masking_patterns}
+
+TODO: remake, text not visible
+\begin{figure}[h]
+  \centering
+  \includegraphics*[scale=0.1]{img/sparse_transformer.png}
+  \caption{
+    \cite{child_generating_2019}
+  }
+\end{figure}
+
 \subsection{Vocabulary}
 Different model architectures use different vocabularies. These are chosen based
 on the differing requirements of the models. The vocabulary needs to accommodate 
@@ -101,6 +152,8 @@ TODO: talk about the exact differences between fine-tuning,
 i think bert modifies the weights and gpt only adds an extra layer after
 
 TODO: elmo for feature based?
+
+TODO: talk about GPT sparse transformer, used in gpt-3
 
 
 
@@ -220,7 +273,7 @@ To get around of these limitations, transformers can be taught to use external t
 to offload these tasks to applications better suited to them. \cite{schick_toolformer_2023} 
 This can be achieved using additional fine tuning, as is the case with Toolformer
 \cite{schick_toolformer_2023}, or by using few-shot methods telling the model 
-about the tools available to it, as in Toolformer Zero \cite{markus_toolformer_2023}.
+about the tools available to it, as in Toolformer Zero \cite{minosvasilias_markus_toolformer_2023}.
 
 \subsection{Multimodal Models}
 Large language models have proven themselves very capable at a variety of language related
