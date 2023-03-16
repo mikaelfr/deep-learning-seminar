@@ -40,7 +40,7 @@
 
 \begin{abstract}
   This paper discusses three language models based on the transformer architecture.
-  I aim decipher some differences between the models which seem very similar at first glance.
+  I aim to decipher some differences between the models which seem very similar at first glance.
   The paper also takes a look at some applications and extensions to basic language
   models and some problems present in large language models, including biases
   and hallucination.
@@ -67,11 +67,11 @@ The three different models are all similar in architecture being mostly
 faithful to the original transformer architecture as presented in 
 \cite{vaswani_attention_2017}. However, each of them have a different approach
 to using the decoder and encoder stacks of the transformer. GPT uses only
-the decoder, BERT only the encoder and T5 both encoder and decoder
+the decoder, BERT only the encoder and T5 both the encoder and decoder
 \cite{radford_improving_nodate,devlin_bert_2019,raffel_exploring_2020}.
 
 \section{Training}
-All three of the models this paper discusses use transfer learning for 
+All three of the models this paper discusses use similar approaches for 
 training. The general idea is to first train a baseline model unsupervised 
 using a large amount of unstructured text and then fine tuning the model
 for each specific task after. 
@@ -79,7 +79,7 @@ for each specific task after.
 The objective of the unsupervised pre-training stage is to teach the model
 general language understanding. The exact details between models varies but
 in general, a massive number tokens are fed into to model during the course
-of training. Each word corresponds to a single or a few tokens depending on 
+of pre-training. Each word corresponds to a single or a few tokens depending on 
 the encoding used [citation needed, same as pricing] and the number of tokens
 used in training can go up to the trillions \cite{raffel_exploring_2020}. 
 The model is asked to predict a missing token based on context. 
