@@ -11,6 +11,9 @@
 
 \addbibresource{references.bib}
 
+% TODO: temporary for having the "for the reader" section start from 0
+\setcounter{section}{-1}
+
 \begin{document}
 
 % If your paper is accepted and the title of your paper is very long,
@@ -36,12 +39,22 @@
 \paperaddress{ } ]
 
 \begin{abstract}
-  The Abstract paragraph should be indented 0.25 inch (1.5 picas) on
-  both left and right-hand margins. Use 10~point type, with a vertical
-  spacing of 11~points.  The {\bf Abstract} heading must be centered,
-  bold, and in point size 12. Two line spaces precede the
-  Abstract. The Abstract must be limited to one paragraph.
+  This paper discusses three language models based on the transformer architecture.
+  I aim decipher some differences between the models which seem very similar at first glance.
+  The paper also takes a look at some applications and extensions to basic language
+  models and some problems present in large language models, including biases
+  and hallucination.
 \end{abstract}
+
+\section{For the reader}
+There's a bit of length left in this paper for some extra explanations,
+examples and images, so if there's anything specific you would like to
+read about, please indicate that in your review. It can be quite hard to 
+gauge the level of difficulty of different topics after being submerged 
+in them for a while. Please keep in mind that I should not overlap too much
+with specific language model applications nor the general transformer
+architecture, since those are their own distinct topics assigned to 
+other people. 
 
 \section{Introduction}
 This paper will take a look at three popular language models utilizing
@@ -78,14 +91,13 @@ The training can fine-tune all the parameters of the model, as in BERT
 trained, as in GPT \cite{radford_improving_nodate}.
 
 \subsection{Attention masking}
-
-TODO: explain how attention masking works
-
-TODO: explain sparse transformer, used in gpt-3 (maybe 2 also)
+Attention masking prevents the model from attending to some tokens in the input. At any
+given time $j$, the model is allowed to see input up to index $i$. Masking is used to prevent the model from
+attending to future input which would trivialize training. \cite{raffel_exploring_2020}
 
 The original transformer's encoder-decoder architecture as specified in 
 \cite{vaswani_attention_2017} corresponds to the leftmost masking pattern as
-specified in \ref{masking_patterns}. T5 uses this architecture and masking pattern
+specified in figure \ref{masking_patterns}. T5 uses this architecture and masking pattern
 \cite{raffel_exploring_2020}. As previously mentioned, BERT uses an encoder
 only architecture \cite{devlin_bert_2019} and uses a fully-visible masking 
 pattern with a special classification token \cite{raffel_exploring_2020}. GPT on
@@ -95,6 +107,14 @@ and uses causal masking \cite{liu_generating_2018}.
 Prefix masking can be useful for example when translating. The prefix allows the
 model to attend to the entire source language sentence and causal masking can be 
 used only for the target language sentence prediction. \cite{raffel_exploring_2020}
+
+Calculating the entire attention history for a long sequence can be an expensive operation.
+It is possible to use a sparse version of the attention masking pattern and still achieve 
+comparable performance to a full attention mask. A sparse transformer with a fixed attention
+pattern includes cells that can summarize the previous locations and propagate 
+that forward. This allows computing longer sequences of input tokens and is used in GPT-3
+\cite{brown_language_2020}. An illustrating example of different masking patterns
+can be seen in figure \ref{sparse_transformer}. \cite{child_generating_2019}
 
 \begin{figure}[h]
   \centering
@@ -117,13 +137,16 @@ used only for the target language sentence prediction. \cite{raffel_exploring_20
 \end{figure}
 \label{masking_patterns}
 
-TODO: remake, text not visible
 \begin{figure}[h]
   \centering
   \includegraphics*[scale=0.1]{img/sparse_transformer.png}
   \caption{
+    Sparse Transformer. Visualizing the attention masking pattern on a 6x6 image
+    for two attention heads. On the left, the original transformer. In the middle,
+    a sparse transformer using striding and on the right, a fixed sparse transformer.
     \cite{child_generating_2019}
   }
+\label{sparse_transformer}
 \end{figure}
 
 \subsection{Vocabulary}
@@ -141,21 +164,6 @@ presented in the paper originally proposing the transformer
 the models come down to training, attention layer masking and the encoder-decoder layers
 \cite{raffel_exploring_2020}.
 
-TODO: talk about masking the attention layers somewhere, was talked about in
-the t5 paper
-TODO: talk about masking, t5 paper lists this as the biggest differentiating factor
-between models. the t5 paper is also good source for general comparison between different
-architectures and approaches
-(the above two are the same)
-
-TODO: talk about the exact differences between fine-tuning,
-i think bert modifies the weights and gpt only adds an extra layer after
-
-TODO: elmo for feature based?
-
-TODO: talk about GPT sparse transformer, used in gpt-3
-
-
 
 \subsection{Generative Pre-Trained Transformer}
 Generative Pre-Trained Transformer, more commonly known as GPT, is a model
@@ -164,9 +172,12 @@ GPT uses only the decoder of the transformer with 12 layers
 \cite{radford_improving_nodate}. The training is split into unsupervised
 pre-training and supervised fine-tuning. 
 
-In the unsupervised pre-training phase, the model is given a set of long form text
-\cite{radford_improving_nodate}. The supervised fine-tuning is used to train the
-model for a specific task. 
+In the unsupervised pre-training phase, the model is given a set of long form text. 
+The supervised fine-tuning is used to train the
+model for a specific task. In the supervised fine-tuning phase, an additional linear
+output layer is added
+and the pre-trained model's activation layer and linear output layer are trained
+to the specific task. \cite{radford_improving_nodate}
 
 As the number of parameters in the model grows past a certain threshold, it
 is no longer necessary to fine-tune the model for each specific use case 
@@ -218,7 +229,9 @@ BERT also uses unsupervised pre-training and supervised fine-tuning as the gener
 The largest amount of work and time is spent pre-training the model on a large set of unstructured
 text. This teaches the model general language understanding. Fine-tuning can then be used to 
 train the model for specific natural language tasks leveraging the existing language knowledge 
-from the pre-training stage. Fine-tuning is usually a more lightweight operation than pre-training.
+from the pre-training stage. The pre-trained model is used to initialize a new model and 
+then all the parameters are trained for a specific task. Fine-tuning is usually a more 
+lightweight operation than pre-training. \cite{devlin_bert_2019}
 
 \subsection{Text-to-Text Transfer Transformer}
 \begin{figure*}
@@ -303,7 +316,24 @@ for a robot. \cite{driess_palm-e_2023}
 
 
 \section{Problems}
-TODO: write about hallucination, overconfidence, radicalization etc.
+\subsection{Biases}
+The writers of \cite{brown_language_2020} did a review of gender, racial and religious
+biases in the model they presented in the paper. Their conclusion was that there were
+certain biases in place which matched the biases present in the training data, that being
+the internet. 
+
+Most highly educated and physical labor occupations had a male bias and in general, males
+had a bias for being mentioned more often both in positive and negative contexts. Racial
+sentiment depended on the size of the model, but in general, the sentiment for white,
+black and middle eastern people was around neutral and for latinx, asian and indian it was
+positive. For religion, violence was linked to islam at a greater rate than for other
+major world religions.
+
+\subsection{Hallucination}
+Large languge models produce convincing text that can rival human written text \cite{brown_language_2020}.
+It is possible to get these models to produce content which is 
+not entirely factual or even completely nonsensical \cite{ji_survey_2023}. 
+
 For example, when asking ChatGPT, which uses a slightly modified version of GPT-3 called 
 GPT-3.5 [citation needed], to do a simple calculation, it answers confidently. 
 With a prompt of "\texttt{what is 491*397}" we receive a response of 
