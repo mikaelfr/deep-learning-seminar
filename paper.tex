@@ -64,7 +64,7 @@ give the reader a general overview of the current landscape of different
 transformer based language model architectures and some example applications.
 
 The three different models are all similar in architecture being mostly
-faithful to the original transformer architecture as presented in 
+faithful to the original transformer as presented in 
 \cite{vaswani_attention_2017}. However, each of them have a different approach
 to using the decoder and encoder stacks of the transformer. GPT uses only
 the decoder, BERT only the encoder and T5 both the encoder and decoder
@@ -74,13 +74,13 @@ the decoder, BERT only the encoder and T5 both the encoder and decoder
 All three of the models this paper discusses use similar approaches for 
 training. The general idea is to first train a baseline model unsupervised 
 using a large amount of unstructured text and then fine tuning the model
-for each specific task after. 
+for each specific task afterwards. 
 
 The objective of the unsupervised pre-training stage is to teach the model
 general language understanding. The exact details between models varies but
 in general, a massive number tokens are fed into to model during the course
 of pre-training. Each word corresponds to a single or a few tokens depending on 
-the encoding used [citation needed, same as pricing] and the number of tokens
+the encoding used \cite{noauthor_pricing_nodate} and the number of tokens
 used in training can go up to the trillions \cite{raffel_exploring_2020}. 
 The model is asked to predict a missing token based on context. 
 
@@ -134,8 +134,8 @@ can be seen in figure \ref{sparse_transformer}. \cite{child_generating_2019}
     fully-visible masking. Light gray lines indicate causal masking.
     \cite{raffel_exploring_2020}
   }
+  \label{masking_patterns}
 \end{figure}
-\label{masking_patterns}
 
 \begin{figure}[h]
   \centering
@@ -146,7 +146,7 @@ can be seen in figure \ref{sparse_transformer}. \cite{child_generating_2019}
     a sparse transformer using striding and on the right, a fixed sparse transformer.
     \cite{child_generating_2019}
   }
-\label{sparse_transformer}
+  \label{sparse_transformer}
 \end{figure}
 
 \subsection{Vocabulary}
@@ -161,7 +161,7 @@ large.
 The models this paper discusses closely follow the initial architecture
 presented in the paper originally proposing the transformer 
 \cite{vaswani_attention_2017}. Most of the differences between 
-the models come down to training, attention layer masking and the encoder-decoder layers
+the models come down to training, attention layer masking and the use of encoder-decoder layers
 \cite{raffel_exploring_2020}.
 
 
@@ -182,14 +182,14 @@ to the specific task. \cite{radford_improving_nodate}
 As the number of parameters in the model grows past a certain threshold, it
 is no longer necessary to fine-tune the model for each specific use case 
 \cite{brown_language_2020}. Depending on the task at hand, it might be sufficient
-to just give the model some examples of the task initially and it will (understand what you want it to do). The examples are given to
+to just give the model some examples of the task initially and it will pick up on the task pattern. The examples are given to
 the model after training during inference and thus differs from fine-tuning. 
 This is called few-shot learning. Special cases of this are one-shot learning which is
 otherwise similar to few-shot learning except the number of examples is one.
 Zero-shot learning refers to giving the task description using natural language,
 kind of like you were explaining it to a human. 
 
-As an example \cite{brown_language_2020} used English to French translation.
+As an example, \cite{brown_language_2020} used English to French translation.
 The researchers gave the model between 10 to 100 pairs of examples of the
 same sentence in English and French. The last pair had just an English sentence
 and the model was expected to produce the corresponding sentence translated into
@@ -199,7 +199,7 @@ While few-shot learning requires less data and computing power, which makes it m
 accessible compared to fine-tuning a large model, at least during the writing of 
 \cite{brown_language_2020} failed to produce comparable results to fine-tuning.
 The number of examples given is restricted by the size of the model's context,
-which for GPT-3 was 2048 tokens, around 1500 words (citation needed, pricing page has this info).
+which for GPT-3 was 2048 tokens, around 1500 words \cite{noauthor_pricing_nodate}.
 
 \subsection{Bidirectional Encoder Representations from Transformers}
 Bidirectional Encoder Representations from Transformers, henceforth referred to as BERT,
@@ -221,7 +221,7 @@ into random tokens or kept as is. This helps prevent a difference between pre-tr
 Other unidirectional methods predict the entire text during training while MLM only 
 does so only for the masked tokens. \cite{devlin_bert_2019}
 
-Next sentence prediction takes a pair of sentences, \texttt{A} and \texttt{B}, and requests the model
+Next sentence prediction takes a pair of sentences, \texttt{A} and \texttt{B}, and asks the model
 to predict whether \texttt{B} follows \texttt{A} or not. In the paper, 50\% of the time \texttt{B} 
 was the next sentence and 50\% of the time it was not. \cite{devlin_bert_2019}
 
@@ -273,7 +273,7 @@ task as text in, text out. It uses both the encoder and decoder layers of the tr
 The main differentiating factor of T5 is the way it chooses to model tasks. Instead of 
 tailoring each output to the specific task at hand, every task takes in a text prefix
 describing the task and outputting the results as text. For example, for STS-B classification
-task the model is trained to out one of a set of floating point numbers 
+task the model is trained to output one of a set of floating point numbers 
 $x \in \{ 1+0.2k \mid k \in \{ 0, 1, ..., 20\} \}$ as a text. Many other models just 
 output a number directly as a sliding scale from 1 to 5. 
 
@@ -291,7 +291,7 @@ about the tools available to it, as in Toolformer Zero \cite{minosvasilias_marku
 \subsection{Multimodal Models}
 Large language models have proven themselves very capable at a variety of language related
 tasks. Their usefulness quickly diminishes the further we stray from their training set.
-Using multimodal models (check name) however, we can widen the area of tasks the model
+Using multimodal models however, we can widen the area of tasks the model
 can complete and even achieve positive transfer, benefitting from the variety of tasks
 it is trained for \cite{driess_palm-e_2023}. 
 
@@ -335,7 +335,7 @@ It is possible to get these models to produce content which is
 not entirely factual or even completely nonsensical \cite{ji_survey_2023}. 
 
 For example, when asking ChatGPT, which uses a slightly modified version of GPT-3 called 
-GPT-3.5 [citation needed], to do a simple calculation, it answers confidently. 
+GPT-3.5 \cite{noauthor_introducing_nodate-1}, to do a simple calculation, it answers confidently. 
 With a prompt of "\texttt{what is 491*397}" we receive a response of 
 "\texttt{The product of 491 and 397 is 195127.}". Unfortunately, using a calculator
 leads to a different answer: 194927. Dangerously close, but not quite there.
@@ -347,11 +347,11 @@ a logically perplexing response "\texttt{Sauli Niinistö is the current Presiden
 and he is currently serving his second consecutive term in office. 
 His third term began on March 1, 2018, and it will end on February 28, 2024. ...}".
 The response claims that Sauli Niinistö is currently serving his second term in office
-which is correct as of 2023 and also in 2021 where the training data of GPT-3.5 ends 
-[citation needed]. However, after this, the response claims that his third term began
+which is correct as of 2023 and also in 2021 where the training data of GPT-3.5 ends. 
+However, after this, the response claims that his third term began
 in 2018, directly contradicting the previous statement. It is also important to mention
-that there has been a two term limit since (insert year here) written into law 
-[citation needed, finlex?]. Rest of the response after the first paragraph is removed.
+that there has been a two term limit since the 1990s written into law 
+\cite{oy_finlex_nodate}. Rest of the response after the first paragraph is removed.
 
 While these limitations can be quite clear to professionals, many people without relevant
 experience have no way of discerning factually correct answers from wrong ones. The confidence
