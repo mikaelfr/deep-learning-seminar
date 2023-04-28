@@ -44,14 +44,30 @@
 \end{abstract}
 
 \section{Introduction}
+
+TODO: write a generic paragraph
+
+Transformers can be split into two main parts: an encoder and a decoder stack. 
+The encoder reads the input text converting it into a vector representation. This is
+then fed into the decoder which then generates the output utilizing this vector.
+It is not necessary to have both an encoder and a decoder in the transformers
+and the same tasks can be performed even without one of these present.
+
+While encoder-decoder language models existed before the transformer, it was 
+the first one to use only an attention mechanism for all computation. 
+The attention mechanism is a mapping for a query and key-value pairs to some output. 
+Intuitively, in transformers
+it is used by the model to give different weights for different words in the input when
+determining what the output should be [TODO: citation needed].
+
 This paper will take a look at three popular language models utilizing
 transformers in their architecture. It will also give a quick overview
 of some applications and additions to the generic model. The aim is to
 give the reader a general overview of the current landscape of different
 transformer based language model architectures and some example applications.
 
-The three different models are all similar in architecture being mostly
-faithful to the original transformer as presented in 
+The three different models studied in this paper are all similar in architecture 
+being mostly faithful to the original transformer as presented in 
 \cite{vaswani_attention_2017}. However, each of them have a different approach
 to using the decoder and encoder stacks of the transformer. GPT uses only
 the decoder, BERT only the encoder and T5 both the encoder and decoder
@@ -65,7 +81,7 @@ for each specific task afterwards.
 
 The objective of the unsupervised pre-training stage is to teach the model
 general language understanding. The exact details between models varies but
-in general, a massive number tokens are fed into to model during the course
+in general, a massive number of tokens are fed into the model during the course
 of pre-training. Each word corresponds to a single or a few tokens depending on 
 the encoding used \cite{noauthor_pricing_nodate} and the number of tokens
 used in training can go up to the trillions \cite{raffel_exploring_2020}. 
@@ -78,13 +94,13 @@ The training can fine-tune all the parameters of the model, as in BERT
 trained, as in GPT \cite{radford_improving_nodate}.
 
 \subsection{Attention masking}
-Attention masking prevents the model from attending to some tokens in the input. At any
-given time $j$, the model is allowed to see input up to index $i$. Masking is used to prevent the model from
-attending to future input which would trivialize training. \cite{raffel_exploring_2020}
+Attention masking prevents the model from seeing some tokens in the input. At any
+given time $j$, the model is allowed to use input up to index $i$. Masking is used to prevent the model from
+seeing future input which would trivialize training. \cite{raffel_exploring_2020}
 
 The original transformer's encoder-decoder architecture as specified in 
 \cite{vaswani_attention_2017} corresponds to the leftmost masking pattern as
-specified in figure \ref{masking_patterns}. T5 uses this architecture and masking pattern
+specified in Figure \ref{masking_patterns}. T5 uses this architecture and masking pattern
 \cite{raffel_exploring_2020}. As previously mentioned, BERT uses an encoder
 only architecture \cite{devlin_bert_2019} and uses a fully-visible masking 
 pattern with a special classification token \cite{raffel_exploring_2020}. GPT on
@@ -101,7 +117,7 @@ comparable performance to a full attention mask. A sparse transformer with a fix
 pattern includes cells that can summarize the previous locations and propagate 
 that forward. This allows computing longer sequences of input tokens and is used in GPT-3
 \cite{brown_language_2020}. An illustrating example of different masking patterns
-can be seen in figure \ref{sparse_transformer}. \cite{child_generating_2019}
+can be seen in Figure \ref{sparse_transformer}. \cite{child_generating_2019}
 
 \begin{figure}[h]
   \centering
@@ -176,32 +192,36 @@ otherwise similar to few-shot learning except the number of examples is one.
 Zero-shot learning refers to giving the task description using natural language,
 kind of like you were explaining it to a human. 
 
-As an example, \cite{brown_language_2020} used English to French translation.
+As an example, Brown et al. \cite{brown_language_2020} used English to French translation.
 The researchers gave the model between 10 to 100 pairs of examples of the
 same sentence in English and French. The last pair had just an English sentence
 and the model was expected to produce the corresponding sentence translated into
 French.
 
 While few-shot learning requires less data and computing power, which makes it more
-accessible compared to fine-tuning a large model, at least during the writing of 
-\cite{brown_language_2020} failed to produce comparable results to fine-tuning.
+accessible compared to fine-tuning a large model, Brown et al. \cite{brown_language_2020} 
+were unable to produce comparable results to fine-tuning.
 The number of examples given is restricted by the size of the model's context,
 which for GPT-3 was 2048 tokens, around 1500 words \cite{noauthor_pricing_nodate}.
 
 \subsection{Bidirectional Encoder Representations from Transformers}
-Bidirectional Encoder Representations from Transformers, henceforth referred to as BERT,
+Bidirectional Encoder Representations from Transformers (BERT)
 is a language model utilizing masking of words during training to achieve bidirectionality
 in the model. \cite{devlin_bert_2019}
 
 BERT uses a similar architecture as the original transformer. It uses the encoder with
 multiple layers. The main difference is in the training methods. In the pre-training step,
 two different training approaches are used: masked language model and next sentence prediction.
-Masking allows the self-attention layer to take into account both sides of a given word, instead
-of just one side, as in GPT which can only use the previous words as context. Using next sentence
+Word masking allows the self-attention layer to take into account both sides of a given word, instead
+of just one side, as in GPT which can only use the previous words as context. Word masking is
+distinct from attention masking and refers to the hiding of individual words in the training data
+before feeding it into the model.
+% TODO: verify this
+ Using next sentence
 prediction improves the model's understanding of the relationships between sentences. This is
 useful for question answering and natural language inference type of tasks. \cite{devlin_bert_2019}
 
-A masked language model (MLM) is achived by hiding a certain number of tokens, 12\% in the paper, and
+A masked language model (MLM) is achived by hiding a certain number of tokens and
 asking the model to predict the hidden token. The model can then use both sides of the token as
 context. Some of the tokens marked for masking are instead turned 
 into random tokens or kept as is. This helps prevent a difference between pre-training and fine-tuning.
@@ -259,12 +279,12 @@ task as text in, text out. It uses both the encoder and decoder layers of the tr
 
 The main differentiating factor of T5 is the way it chooses to model tasks. Instead of 
 tailoring each output to the specific task at hand, every task takes in a text prefix
-describing the task and outputting the results as text. For example, for STS-B classification
+describing the task and outputting the results as text. For example, for a classification
 task the model is trained to output one of a set of floating point numbers 
-$x \in \{ 1+0.2k \mid k \in \{ 0, 1, ..., 20\} \}$ as a text. Many other models just 
+$x \in \{ 1+0.2k \mid k \in \{ 0, 1, ..., 20\} \}$ as text. Many other models just 
 output a number directly as a sliding scale from 1 to 5. 
 
-\section{Applications}
+\section{Extensions}
 
 \subsection{Toolformer}
 Transformers are able to produce very natural text but as previously mentioned, they struggle with seemingly
@@ -304,7 +324,7 @@ for a robot. \cite{driess_palm-e_2023}
 
 \section{Problems}
 \subsection{Biases}
-The writers of \cite{brown_language_2020} did a review of gender, racial and religious
+Brown et al. \cite{brown_language_2020} did a review of gender, racial and religious
 biases in the model they presented in the paper. Their conclusion was that there were
 certain biases in place which matched the biases present in the training data, that being
 the internet. 
@@ -345,6 +365,19 @@ experience have no way of discerning factually correct answers from wrong ones. 
 by which the models answer can also mislead people into trusting the answers too much.
 
 
+\section{Conclusion}
+This paper introduced three popular language models based on the transformer architecture.
+They are mostly similar, all faithful to the original transformer architecture, with
+some key differences in the usage of attention masking and encoder-decoder stacks.
+
+Transformers are able to produce impressive results on many different domains of natural
+language processing. However, it is important to keep in mind that they are not without 
+their problems. As with any machine learning model,
+biases should be considered and the outputs validated. 
+
+Hopefully this paper serves as a good introduction to the general landscape of 
+transformers in language models and helps in understanding what is going on in
+large language models.
 
 \printbibliography
 
