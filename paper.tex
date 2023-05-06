@@ -45,20 +45,24 @@
 
 \section{Introduction}
 
-TODO: write a generic paragraph
+Natural language processing has increased in popularity. As the amount of textual data
+increases, companies and researchers are looking for better ways of getting insights from
+these sources. Transformers offer an answer
+to the ever increasing requirements.
 
 Transformers can be split into two main parts: an encoder and a decoder stack. 
 The encoder reads the input text converting it into a vector representation. This is
 then fed into the decoder which then generates the output utilizing this vector.
 It is not necessary to have both an encoder and a decoder in the transformers
-and the same tasks can be performed even without one of these present.
+and the same tasks can be performed even without one of these present. 
+\cite{vaswani_attention_2017}
 
 While encoder-decoder language models existed before the transformer, it was 
 the first one to use only an attention mechanism for all computation. 
 The attention mechanism is a mapping for a query and key-value pairs to some output. 
 Intuitively, in transformers
 it is used by the model to give different weights for different words in the input when
-determining what the output should be [TODO: citation needed].
+determining what the output should be. \cite{galassi_attention_2021}
 
 This paper will take a look at three popular language models utilizing
 transformers in their architecture. It will also give a quick overview
@@ -66,7 +70,7 @@ of some applications and additions to the generic model. The aim is to
 give the reader a general overview of the current landscape of different
 transformer based language model architectures and some example applications.
 
-The three different models studied in this paper are all similar in architecture 
+The three different models studied in this paper, GPT, BERT and T5, are all similar in architecture 
 being mostly faithful to the original transformer as presented in 
 \cite{vaswani_attention_2017}. However, each of them have a different approach
 to using the decoder and encoder stacks of the transformer. GPT uses only
@@ -76,7 +80,7 @@ the decoder, BERT only the encoder and T5 both the encoder and decoder
 \section{Training}
 All three of the models this paper discusses use similar approaches for 
 training. The general idea is to first train a baseline model unsupervised 
-using a large amount of unstructured text and then fine tuning the model
+using a large amount of written text and then fine tuning the model
 for each specific task afterwards. 
 
 The objective of the unsupervised pre-training stage is to teach the model
@@ -87,8 +91,8 @@ the encoding used \cite{noauthor_pricing_nodate} and the number of tokens
 used in training can go up to the trillions \cite{raffel_exploring_2020}. 
 The model is asked to predict a missing token based on context. 
 
-In the fine-tuning stage, the pre-trained model is used as a baseline. A new
-model is trained using supervised learning with a task specific data set. 
+In the fine-tuning stage, the pre-trained model is adapted to a specific task 
+using supervised learning.
 The training can fine-tune all the parameters of the model, as in BERT 
 \cite{devlin_bert_2019}, or an additional layer can be added and then
 trained, as in GPT \cite{radford_improving_nodate}.
@@ -97,6 +101,12 @@ trained, as in GPT \cite{radford_improving_nodate}.
 Attention masking prevents the model from seeing some tokens in the input. At any
 given time $j$, the model is allowed to use input up to index $i$. Masking is used to prevent the model from
 seeing future input which would trivialize training. \cite{raffel_exploring_2020}
+
+Some common masking patterns include fully-visible, causal and causal with prefix.
+Figure \ref{masking_patterns_raw} offers a helpful visualization for these three
+patterns. 
+The patterns can be mixed together and different parts of the transformer can use different
+masking patterns.
 
 The original transformer's encoder-decoder architecture as specified in 
 \cite{vaswani_attention_2017} corresponds to the leftmost masking pattern as
@@ -107,9 +117,14 @@ pattern with a special classification token \cite{raffel_exploring_2020}. GPT on
 the other hand, uses a decoder only architecture \cite{radford_improving_nodate}
 and uses causal masking \cite{liu_generating_2018}.
 
-Prefix masking can be useful for example when translating. The prefix allows the
+Prefix masking, which corresponds to the rightmost masking pattern in Figure 
+\ref{masking_patterns}, can be useful for example when translating. The prefix allows the
 model to attend to the entire source language sentence and causal masking can be 
-used only for the target language sentence prediction. \cite{raffel_exploring_2020}
+used only for the target language sentence prediction. For example when translating, given an input
+such as \texttt{[BEGIN]The dog is red.[PAD][SEP]Koira on punainen.[END]}, prefix masking 
+can allow the model to fully attend to the input up until \texttt{[SEP]}. Only after this
+point does the model have to start generating an output of its own.
+ \cite{raffel_exploring_2020}
 
 Calculating the entire attention history for a long sequence can be an expensive operation.
 It is possible to use a sparse version of the attention masking pattern and still achieve 
@@ -126,8 +141,9 @@ can be seen in Figure \ref{sparse_transformer}. \cite{child_generating_2019}
     Different attention masking patterns seen in transformer based language models.
     Dark squares indicate that the attention mechanism can see the input $i$ at time $j$.
     Light squares indicate that the access is blocked for a given pair $i$, $j$. 
-    \cite{raffel_exploring_2020}
+    Figure by Raffel et al. \cite{raffel_exploring_2020}
   }
+  \label{masking_patterns_raw}
 \end{figure}
 \begin{figure}[h]
   \centering
@@ -135,7 +151,7 @@ can be seen in Figure \ref{sparse_transformer}. \cite{child_generating_2019}
   \caption{
     Different masking patterns used within language models. Dark lines correspond to 
     fully-visible masking. Light gray lines indicate causal masking.
-    \cite{raffel_exploring_2020}
+    Figure by Raffel et al. \cite{raffel_exploring_2020}
   }
   \label{masking_patterns}
 \end{figure}
@@ -147,7 +163,7 @@ can be seen in Figure \ref{sparse_transformer}. \cite{child_generating_2019}
     Sparse Transformer. Visualizing the attention masking pattern on a 6x6 image
     for two attention heads. On the left, the original transformer. In the middle,
     a sparse transformer using striding and on the right, a fixed sparse transformer.
-    \cite{child_generating_2019}
+    Figure by Child et al. \cite{child_generating_2019}
   }
   \label{sparse_transformer}
 \end{figure}
@@ -207,7 +223,8 @@ which for GPT-3 was 2048 tokens, around 1500 words \cite{noauthor_pricing_nodate
 \subsection{Bidirectional Encoder Representations from Transformers}
 Bidirectional Encoder Representations from Transformers (BERT)
 is a language model utilizing masking of words during training to achieve bidirectionality
-in the model. \cite{devlin_bert_2019}
+in the model. Bidirectionality allows the model to simultaneously take into account
+both sides of the processed word, while a generic transformer can only see one. \cite{devlin_bert_2019}
 
 BERT uses a similar architecture as the original transformer. It uses the encoder with
 multiple layers. The main difference is in the training methods. In the pre-training step,
@@ -270,7 +287,7 @@ lightweight operation than pre-training. \cite{devlin_bert_2019}
     \draw [-] (stsbout.west) .. controls +(left:5mm) and +(right:5mm) .. (t5.east);
     \draw [-] (summaryout.west) .. controls +(left:5mm) and +(right:5mm) .. (t5.east);
   \end{tikzpicture}
-  \caption{Illustrating the types of inputs and outputs. Recreated from \cite{raffel_exploring_2020}.}
+  \caption{Illustrating the types of inputs and outputs. Recreated from a Figure by Raffel et al. \cite{raffel_exploring_2020}.}
 \end{figure*}
 
 Text-to-Text Transfer Transformer, abbreviated as T5, is a language model modelling each
@@ -297,7 +314,7 @@ about the tools available to it, as in Toolformer Zero \cite{minosvasilias_marku
 
 \subsection{Multimodal Models}
 Large language models have proven themselves very capable at a variety of language related
-tasks. Their usefulness quickly diminishes the further we stray from their training set.
+tasks. Unfortunately, their usefulness quickly diminishes the further we stray from their training set.
 Using multimodal models however, we can widen the area of tasks the model
 can complete and even achieve positive transfer, benefitting from the variety of tasks
 it is trained for \cite{driess_palm-e_2023}. 
@@ -317,7 +334,7 @@ for a robot. \cite{driess_palm-e_2023}
   \caption{
     PaLM-E displays positive transfer in learning. The performance is better for these three
     distinct robotics domains when trained together than when trained separately for the 
-    specific tasks. \cite{driess_palm-e_2023}
+    specific tasks. Figure by Driess et al. \cite{driess_palm-e_2023}
   }
 \end{figure}
 
