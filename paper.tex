@@ -121,7 +121,7 @@ Prefix masking, which corresponds to the rightmost masking pattern in Figure
 \ref{masking_patterns}, can be useful for example when translating. The prefix allows the
 model to attend to the entire source language sentence and causal masking can be 
 used only for the target language sentence prediction. For example when translating, given an input
-such as \texttt{[BEGIN]The dog is red.[PAD][SEP]Koira on punainen.[END]}, prefix masking 
+such as \texttt{[BEGIN]The dog is red.[SEP]Koira on punainen.[END]}, prefix masking 
 can allow the model to fully attend to the input up until \texttt{[SEP]}. Only after this
 point does the model have to start generating an output of its own.
  \cite{raffel_exploring_2020}
@@ -393,8 +393,8 @@ their problems. As with any machine learning model,
 biases should be considered and the outputs validated. 
 
 Hopefully this paper serves as a good introduction to the general landscape of 
-transformers in language models and helps in understanding what is going on in
-large language models.
+transformers in language models and helps in understanding what is going on 
+under the hood in large language models.
 
 \printbibliography
 
